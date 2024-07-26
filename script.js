@@ -33,9 +33,9 @@
         this.distY = (Math.random() * cfg.thick) + (cy - 0.5 * cfg.thick);  
         this.velocity = Math.random() * cfg.minVelocity + 0.5;
         //Calculating color
-        this.red = Math.floor(Math.random() * dRed + minRed);
-        this.green = Math.floor(Math.random() * dGreen + minGreen);
-        this.blue = Math.floor(Math.random() * dBlue + minBlue);
+        this.red = Math.floor(Math.random() * cfg.dRed + cfg.minRed);
+        this.green = Math.floor(Math.random() * cfg.dGreen + cfg.minGreen);
+        this.blue = Math.floor(Math.random() * cfg.dBlue + cfg.minBlue);
         this.color = `rgb(${this.red}, ${this.green}, ${this.blue})`;
       }
 
@@ -44,7 +44,7 @@
 
 
         if (x >= cnv.width) {
-          this.distX = 0;
+          this.distX = -50;
         }
         ctx.fillStyle = this.color;
         ctx.beginPath();
