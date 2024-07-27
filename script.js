@@ -12,6 +12,12 @@
     cy = ch * .5;
   }
 
+  let mx = 0, my = 0;
+    cnv.addEventListener(`mousemove`, e => {
+      mx = e.clientX - cnv.getBoundingClientRect().left;
+      my = e.clientY - cnv.getBoundingClientRect().top;
+    })
+
   //initial values for Waterfall, you can customize it
   const cfg = {
     dRed: 105,        //delta Red color in RGB
@@ -41,15 +47,23 @@
 
     refresh(){
       let x = this.distX + this.velocity;
-
+      let y = this.distY;
+      let distToM   = Math.hypot(x - mx, y - my);
+      let mEffect = distToM <= 70 ? (1 - distToM / 70) * 25 : 0;
+      let size = this.size + mEffect;
 
       if (x >= cnv.width) {
         this.distX = -50;
       }
-      ctx.fillStyle = this.color;
+      ctx.strokeStyle = ctx.fillStyle = this.color;
       ctx.beginPath();
-      ctx.arc(x, this.distY, this.size, 0, 2 * Math.PI);
-      ctx.fill();
+      ctx.arc(x, y, size, 0, 2 * Math.PI);
+      if (distToM <= 70) {
+        ctx.stroke();
+      }else{
+        ctx.fill();
+      }
+      
 
       this.distX = this.distX + this.velocity;
     }
